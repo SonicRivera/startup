@@ -1,10 +1,12 @@
-# KillRush
+# Mixing Pot
 
-## What is KillRush?
-Ever wanted to participate in a video game tournament but couldn't find enough people? Look no further. KillRush is a Webb app that pits players around the world against each other in tournament style kill races without needing to be in the same match or playing online at the same time. KillRush will automatically track players games across a 24 hour period and submit their highest kill game. Players with the highest kill count will move on to the next round.
+## What is Mixing Pot?
+Whether you're a culinary pro eager to share your recipes or a beginner looking to learn, Mixing Pot is your go-to site! Mixing Pot lets you upload and explore recipes, rate and comment on others, and even propose flavor tweaks with our "Mix the Pot" feature. Transform your cooking experience and connect with a vibrant community of food enthusiasts today!
 
 ## Key Features
- - Live leaderboard for KillRush tournaments
- - Secure login through HTTPS
- - Player tournament history tracking
- - 
+ - HTML/CSS: Design an appealing interface for browsing, creating, and sharing recipes.
+ - JavaScript: Implement interactive elements such as search filters, recipe ratings, and comment sections.
+ - Web Services: Use APIs to fetch and store recipes and user data.
+ - Authentication: Enable users to create accounts, submit recipes, and leave comments.
+ - Data Storage: Store recipe details, user profiles, and comments in a persistent database.
+ - Web Sockets: Allow real-time updates on recipe comments or live chat for recipe discussions.
