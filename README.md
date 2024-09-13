@@ -4,7 +4,9 @@
 Whether you're a culinary pro eager to share your recipes or a beginner looking to learn, Melting Pot is your go-to site! Melting Pot lets you upload and explore recipes, rate and comment on others, and even propose flavor tweaks with our "Mix the Pot" feature. Transform your cooking experience and connect with a vibrant community of food enthusiasts today!
 
 ## Design
-(Design goes here)
+![homepage](https://github.com/user-attachments/assets/ae9cdc7d-792f-4078-a513-b576cabb3564)
+![recipepage](https://github.com/user-attachments/assets/d3b7aa12-10ae-458c-9de1-adf0bd115b27)
+
 
 ## Key Features
  - User login to save recipes
