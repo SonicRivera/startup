@@ -1,7 +1,7 @@
-# Mixing Pot
+# Melting Pot
 
-## What is Mixing Pot?
-Whether you're a culinary pro eager to share your recipes or a beginner looking to learn, Mixing Pot is your go-to site! Mixing Pot lets you upload and explore recipes, rate and comment on others, and even propose flavor tweaks with our "Mix the Pot" feature. Transform your cooking experience and connect with a vibrant community of food enthusiasts today!
+## What is Melting Pot?
+Whether you're a culinary pro eager to share your recipes or a beginner looking to learn, Melting Pot is your go-to site! Melting Pot lets you upload and explore recipes, rate and comment on others, and even propose flavor tweaks with our "Mix the Pot" feature. Transform your cooking experience and connect with a vibrant community of food enthusiasts today!
 
 ## Design
 (Design goes here)
