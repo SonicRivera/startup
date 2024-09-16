@@ -1,7 +1,7 @@
 # CS 260 Notes
 
 ## Accessing Webserver:
-`ssh -i ~/Documents/CS260/Security/CS260.pem ubuntu@meltingpoint.live`
+`ssh -i ~/Documents/CS260/Security/CS260.pem ubuntu@meltingpot.live`
 
 ### Github Assignment
 
