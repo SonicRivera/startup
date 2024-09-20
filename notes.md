@@ -10,6 +10,7 @@
 
 ### Startup:
 Please be in the Web folder when using
+
 `../deployFiles.sh -k ../../Security/CS260.pem -h meltingpot.live -s startup`
 
 ## Assignments:
