@@ -11,6 +11,7 @@
 ### Startup:
 ./deployFiles.sh -k ../Security/CS260.pem -h meltingpot.live -s startup
 
-### Github Assignment
+## Assignments:
 
+### GitHub:
 I set up a github repository for my startup and learned the basics of version manegment through git.
