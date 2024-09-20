@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Recipe</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <header>
+        <h1>Submit Your Recipe to MeltingPot!</h1>
+        <p>We'd love to feature your delicious creations!</p>
+    </header>
+
+    <form action="index.html" method="POST">
+        <label for="recipe-name">Recipe Name:</label>
+        <input type="text" id="recipe-name" name="recipe-name" required>
+
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" name="ingredients" rows="5" required></textarea>
+
+        <label for="instructions">Instructions:</label>
+        <textarea id="instructions" name="instructions" rows="5" required></textarea>
+
+        <label for="prep-time">Prep Time:</label>
+        <input type="text" id="prep-time" name="prep-time" required>
+
+        <label for="cook-time">Cook Time:</label>
+        <input type="text" id="cook-time" name="cook-time" required>
+
+        <label for="servings">Servings:</label>
+        <input type="number" id="servings" name="servings" min="1" required>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option value="appetizer">Appetizer</option>
+            <option value="main-course">Main Course</option>
+            <option value="dessert">Dessert</option>
+            <option value="healthy">Healthy</option>
+            <option value="international">International</option>
+        </select>
+
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*">
+
+        <button type="submit">Submit Recipe</button>
+    </form>
+
+    <footer>
+    </footer>
+
+</body>
+</html>
