@@ -3,10 +3,12 @@
 ## Accessing Webserver:
 `ssh -i ~/Documents/CS260/Security/CS260.pem ubuntu@meltingpot.live`
 
-## Deploying to Simon:
+## Deploying:
+
+### Simon:
 ./deployFiles.sh -k ../Security/CS260.pem -h meltingpot.live -s simon
 
-## Deploying to Startup:
+### Startup:
 ./deployFiles.sh -k ../Security/CS260.pem -h meltingpot.live -s startup
 
 ### Github Assignment
