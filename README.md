@@ -21,3 +21,14 @@ Whether you're a culinary pro eager to share your recipes or a beginner looking 
  - Authentication: Enable users to create accounts, submit recipes, and leave comments.
  - Data Storage: Store recipe details, user profiles, and comments in a persistent database.
  - Web Sockets: Allow real-time updates on recipe comments or live chat for recipe discussions.
+
+ ## HTML deliverable
+
+For this assignment I built out the HTML structure and content of my website
+
+- [x] **HTML pages** - HTML pages for a home page, login, submitting a recipe, browsing recipes, and a sample recipe.
+- [x] **Links** - The login page automatically links to the home page. The home page contains links for each category .
+- [x] **Text** - Each Recipe is in text.
+- [ ] **Images** - There are pictures for each recipe. *all pictures are placeholders.
+- [x] **DB/Login** - Input box and submit button for login. The recipes and reviews represent data pulled from the database.
+- [x] **WebSocket** - The comments and reviews represent realtime commenters and reviewers.
