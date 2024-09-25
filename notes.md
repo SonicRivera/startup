@@ -23,3 +23,6 @@ Then exit ssh and `scp -i ~/Documents/CS260/Security/CS260.pem -r ~/Documents/CS
 
 ### GitHub:
 I set up a github repository for my startup and learned the basics of version manegment through git.
+
+### Startup HTML:
+I learned and practiced more HTML and implemented what I learned into my startup wesbite. I learned how to put images and links into my webpage as well as how to create a form for logging in.
