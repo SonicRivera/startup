@@ -11,6 +11,8 @@
 <body>
     <header>
         <h1>Spaghetti Carbonara Recipe</h1>
+        <p><span class="revstars">★★★★★</span></p>
+
         <nav>
             <a href="index.html">Home</a>
             <a href="recipes.html">Recipes</a>
@@ -47,6 +49,34 @@
                 <li>Season with freshly ground black pepper and serve immediately.</li>
             </ol>
         </section>
+
+        <section id="user-reviews">
+            <h2>User Reviews</h2>
+            <blockquote>
+                <p><span class="revstars">★★★★★</span>  “Absolutely delicious! The sauce was heavenly!” - Sarah L.</p>
+            </blockquote>
+            <blockquote>
+                <p><span class="revstars">★★★★☆</span> “Quick and easy to make. Perfect for weeknight dinners!” - James R.</p>
+            </blockquote>
+            <blockquote>
+                <p><span class="revstars">★★★★★</span> “Good balance between pasta and meat, very delicious!” - Lauren R.</p>
+            </blockquote>
+        </section>
+
+        <section id="review-form">
+            <form>            
+                <label for="rating">Rating (1 to 5):</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required>
+            
+                <label for="review">Your Review:</label>
+                <textarea id="review" name="review" rows="5" required></textarea>
+            
+                <input type="submit" value="Submit Review">
+            </form>
+
+        </section>
+
+
     </main>
 </body>
 </html>
