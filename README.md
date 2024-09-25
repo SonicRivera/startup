@@ -26,9 +26,9 @@ Whether you're a culinary pro eager to share your recipes or a beginner looking 
 
 For this assignment I built out the HTML structure and content of my website
 
-- [x] **HTML pages** - HTML pages for a home page, login, submitting a recipe, browsing recipes, and a sample recipe.
-- [x] **Links** - The login page automatically links to the home page. The home page contains links for each category .
-- [x] **Text** - Each Recipe is in text.
-- [ ] **Images** - There are pictures for each recipe. *all pictures are placeholders.
-- [x] **DB/Login** - Input box and submit button for login. The recipes and reviews represent data pulled from the database.
-- [x] **WebSocket** - The comments and reviews represent realtime commenters and reviewers.
+- **HTML pages** - HTML pages for a home page, login, submitting a recipe, browsing recipes, and a sample recipe.
+- **Links** - The login page automatically links to the home page. The home page contains links for each category .
+- **Text** - Each Recipe is in text.
+- **Images** - There are pictures for each recipe. *all pictures are placeholders.
+- **DB/Login** - Input box and submit button for login. The recipes and reviews represent data pulled from the database.
+- **WebSocket** - The comments and reviews represent realtime commenters and reviewers.
