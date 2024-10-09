@@ -5,6 +5,7 @@
     <title>Recipes</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="/Pictures/favicon.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,75 +16,114 @@
 <body>
 
     <header>
-        <h1>Welcome to <a href="index.html">MeltingPot!</a></h1>
-        <p>Discover a world of flavors and culinary delights!</p>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-around">
+                    <div class="col-2">
+                        <h1><a href="index.html">MeltingPot</a></h1>
+                    </div>
+                    <div class="col-3">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search Recipes" aria-label="Search">
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary">Welcome <span id="username">Username</span></button>
+                    </div>
+            </div>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+                    <a class="navbar-brand ms-3" href="recipes.html">Recipes</a>
+                    <a class="navbar-brand" href="submit-recipe.html">Submit a Recipe</a>
+                    <a class="navbar-brand" href="about.html">About Us</a>
+                    <a class="navbar-brand" href="login.html">Login</a>
+                </nav>
+    
+        </div>
     </header>
+        <div class="container">
+            <h2>Browse by Category</h2>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#appetizers">Appetizers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#main-courses">Main Courses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#desserts">Desserts</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
 
-    <nav>
-        <h2>Browse by Category</h2>
-        <ul>
-            <li><a href="#appetizers">Appetizers</a></li>
-            <li><a href="#main-courses">Main Courses</a></li>
-            <li><a href="#desserts">Desserts</a></li>
-            <li><a href="#healthy-options">Healthy Options</a></li>
-            <li><a href="#international-cuisine">International Cuisine</a></li>
-        </ul>
-    </nav>
-
-    <section id="featured-recipe">
-        <h2>Featured Recipe: <a href="mockrecipe.html">Garlic Tuscan Salmon</a></h2>
-        <p><span class="revstars">★★★★☆</span></p>
-    <a href="mockrecipe.html"><img width="30%" src="https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Creamy Garlic Tuscan Salmon"></a>
-        <p><strong>Description:</strong> A rich and flavorful dish featuring pan-seared salmon topped with a creamy garlic sauce, sun-dried tomatoes, and spinach. Perfect for a cozy dinner!</p>
-
-        <p><strong>Prep Time:</strong> 10 minutes</p>
-        <p><strong>Cook Time:</strong> 15 minutes</p>
-        <p><strong>Serves:</strong> 4</p>
+    <section class="container">
+        <h2>Featured Recipe:</h2>
+        <div class="card mb-3 mx-auto" style="max-width: 800px;">
+            <div class="row g-0 align-items-center">
+              <div class="col-md-4">
+                <a href="mockrecipe.html"><img src="https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="img-fluid rounded-start" alt="Spaghetti Carbonara"></a>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="mockrecipe.html">Garlic Tuscan Salmon</a></h5>
+                  <p class="card-text"><span class="revstars">★★★★☆</span></p>
+                  <p class="card-text">A rich and flavorful dish featuring pan-seared salmon topped with a creamy garlic sauce, sun-dried tomatoes, and spinach. Perfect for a cozy dinner!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        
     </section>
 
-    <section>
-        <h1 style="text-align: center;">Browse Recipes</h1>
-        <table class="center">
-            <div class="recipe-card">
-                <tr>
-                    <td><a href="mockrecipe.html">Garlic Tuscan Salmon</a></td>
-                </tr>
-                <tr>
-                    <td><a href="mockrecipe.html"><img width="150em" src="https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"></a></td>
-                </tr>
-                <tr>
-                    <td>★★★★☆</td>
-                </tr>
+    <section class="container">
+        <h1 class="text-center">Browse Recipes</h1>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="mockrecipe.html">
+                        <img src="https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Garlic Tuscan Salmon" style="width: 100%; height: auto;">
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><a href="mockrecipe.html">Garlic Tuscan Salmon</a></h5>
+                        <p class="card-text">★★★★☆</p>
+                    </div>
+                </div>
             </div>
-            <div class="recipe-card">
-                <tr>
-                    <td><a href="mockrecipe.html">Chicken and Rice</a></td>
-                </tr>
-                <tr>
-                    <td><a href="mockrecipe.html"><img width="150em" src="https://images.pexels.com/photos/105588/pexels-photo-105588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"></a></td>
-                </tr>
-                <tr>
-                    <td>★★☆☆☆</td>
-                </tr>
+    
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="mockrecipe.html">
+                        <img src="https://images.pexels.com/photos/105588/pexels-photo-105588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Chicken and Rice" style="width: 100%; height: auto;">
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><a href="mockrecipe.html">Chicken and Rice</a></h5>
+                        <p class="card-text">★★☆☆☆</p>
+                    </div>
+                </div>
             </div>
-            <div class="recipe-card">
-                <tr>
-                    <td><a href="mockrecipe.html">Sushi</a></td>
-                </tr>
-                <tr>
-                    <td><a href="mockrecipe.html"><img width="150em" src="https://images.pexels.com/photos/8743914/pexels-photo-8743914.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"></a></td>
-                </tr>
-                <tr>
-                    <td>★★★★☆</td>
-                </tr>
+    
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="mockrecipe.html">
+                        <img src="https://images.pexels.com/photos/8743914/pexels-photo-8743914.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Sushi" style="width: 100%; height: auto;">
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><a href="mockrecipe.html">Sushi</a></h5>
+                        <p class="card-text">★★★★☆</p>
+                    </div>
+                </div>
             </div>
-        </table>
+        </div>
     </section>
 
-    <footer>
-        <h2>Contact Us</h2>
-        <p>Have questions or feedback? Reach out to us at <a href="bad.html">contact@meltingpot.com</a>.</p>
-        <p>Happy Cooking! Explore, create, and enjoy the flavors of MeltingPot!</p>
+    <footer class="container text-center">
         <a href="https://github.com/SonicRivera/startup">GitHub</a>
     </footer>
 
