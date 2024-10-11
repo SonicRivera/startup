@@ -32,3 +32,13 @@ For this assignment I built out the HTML structure and content of my website
 - **Images** - There are pictures for each recipe. *all pictures are placeholders.
 - **DB/Login** - Input box and submit button for login. The recipes and reviews represent data pulled from the database.
 - **WebSocket** - The comments and reviews represent realtime commenters and reviewers.
+
+## CSS deliverable
+
+For this assignment I styled the website into its final appearance.
+
+- [x] **Header, footer, and main content body** - Header and footer are consistent across relavent pages
+- [x] **Navigation elements** - I dropped the underlines and styled a navbar with bootstrap
+- [x] **Responsive to window resizing** - My app looks great on all window sizes and devices
+- [x] **Application text content** - Consistent fonts throughout the site
+- [x] **Application images** - I have several images for different recipes
