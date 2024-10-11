@@ -37,8 +37,8 @@ For this assignment I built out the HTML structure and content of my website
 
 For this assignment I styled the website into its final appearance.
 
-- [x] **Header, footer, and main content body** - Header and footer are consistent across relavent pages
-- [x] **Navigation elements** - I dropped the underlines and styled a navbar with bootstrap
-- [x] **Responsive to window resizing** - My app looks great on all window sizes and devices
-- [x] **Application text content** - Consistent fonts throughout the site
-- [x] **Application images** - I have several images for different recipes
+- **Header, footer, and main content body** - Header and footer are consistent across relavent pages
+- **Navigation elements** - I dropped the underlines and styled a navbar with bootstrap
+- **Responsive to window resizing** - My app looks great on all window sizes and devices
+- **Application text content** - Consistent fonts throughout the site
+- **Application images** - I have several images for different recipes
