@@ -1,0 +1,24 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "Whether you're a culinary pro eager to share your recipes or a beginner looking to learn, Melting Pot is your go-to site! Melting Pot lets you upload and explore recipes, rate and comment on others, and even propose flavor tweaks with our \"Mix the Pot\" feature. Transform your cooking experience and connect with a vibrant community of food enthusiasts today!",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.5",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
+  }
+}
