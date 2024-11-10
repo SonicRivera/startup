@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const initialReviews = [
-    {
-        rating: 5,
-        text: '“Absolutely delicious! The sauce was heavenly!”',
-        author: 'Sarah L.'
-    },
-    {
-        rating: 4,
-        text: '“Quick and easy to make. Perfect for weeknight dinners!”',
-        author: 'James R.'
-    },
-    {
-        rating: 5,
-        text: '“Good balance between pasta and meat, very delicious!”',
-        author: 'Lauren R.'
-    }
+    { rating: 5, text: '“Absolutely delicious! The sauce was heavenly!”', author: 'Sarah L.' },
+    { rating: 4, text: '“Quick and easy to make. Perfect for weeknight dinners!”', author: 'James R.' },
+    { rating: 5, text: '“Good balance between pasta and meat, very delicious!”', author: 'Lauren R.' }
 ];
 
-export function Reviews() {
+export function Reviews({ setAverageRating }) {
     const [reviews, setReviews] = useState(initialReviews);
     const [newReview, setNewReview] = useState({ rating: '', text: '', author: '' });
+
+    useEffect(() => {
+        const average = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+        setAverageRating(average);
+    }, [reviews, setAverageRating]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,15 +24,12 @@ export function Reviews() {
         e.preventDefault();
         if (newReview.rating && newReview.text && newReview.author) {
             setReviews((prev) => [...prev, { ...newReview, rating: parseInt(newReview.rating) }]);
-            setNewReview({ rating: '', text: '', author: '' }); // Clear form
+            setNewReview({ rating: '', text: '', author: '' });
         }
     };
 
-    const renderStars = (rating) => {
-        return '★'.repeat(rating) + '☆'.repeat(5 - rating);
-    };
-
-    const recentReviews = reviews.slice(-3); // Get the last three reviews
+    const renderStars = (rating) => '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    const recentReviews = reviews.slice(-3);
 
     return (
         <section className="container my-4">
@@ -65,7 +55,6 @@ export function Reviews() {
                         onChange={handleChange}
                         min="1"
                         max="5"
-                        placeholder="Enter a rating from 1 to 5"
                         required
                     />
                 </div>
@@ -78,7 +67,6 @@ export function Reviews() {
                         rows="3"
                         value={newReview.text}
                         onChange={handleChange}
-                        placeholder="Enter your review"
                         required
                     ></textarea>
                 </div>
@@ -91,7 +79,6 @@ export function Reviews() {
                         name="author"
                         value={newReview.author}
                         onChange={handleChange}
-                        placeholder="Enter your name"
                         required
                     />
                 </div>

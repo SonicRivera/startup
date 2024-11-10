@@ -1,7 +1,11 @@
-import React from 'react';
-import { Reviews } from '../components/Reviews';
+import React, { useState } from 'react';
+import Reviews from '../components/Reviews';
 
 export function MockRecipe() {
+    const [averageRating, setAverageRating] = useState(0);
+
+    const renderStars = (rating) => '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+
     return (
         <main>
             <section className="container">
@@ -17,7 +21,7 @@ export function MockRecipe() {
                         <div className="col-md-8">
                             <div className="card-body">
                                 <h1 className="card-title">Spaghetti Carbonara Recipe</h1>
-                                <p><span className="revstars">★★★★★</span></p>
+                                <p><span className="revstars">{renderStars(averageRating)}</span></p>
                                 <h2 className="card-subtitle mb-3">Ingredients</h2>
                                 <ul>
                                     <li>200g Spaghetti</li>
@@ -48,8 +52,9 @@ export function MockRecipe() {
                 </ol>
             </section>
 
-            <Reviews />
+            <Reviews setAverageRating={setAverageRating} />
         </main>
     );
 }
 
+export default MockRecipe;
