@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function SubmitRecipe() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         recipeName: '',
         ingredients: '',
@@ -30,7 +32,9 @@ export function SubmitRecipe() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
-        // Handle form submission logic, like sending data to an API
+        navigate('/'); // Navigate to the home page
+
+        // form submission logic
     };
 
     return (
