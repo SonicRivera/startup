@@ -42,3 +42,15 @@ For this assignment I styled the website into its final appearance.
 - **Responsive to window resizing** - My app looks great on all window sizes and devices
 - **Application text content** - Consistent fonts throughout the site
 - **Application images** - I have several images for different recipes
+
+## React deliverable
+
+For this assignment I used JavaScript and React so the app works for a user. I also added placeholders for other features.
+
+- [x] **Bundled and transpiled** - done!
+- [x] **Components** - Login, header, footer, recipe provider, and reviews are all components, some with mocks for login, WebSocket.
+  - [x] **login** - When you press enter or the login button it takes you to the home page and displays your username.
+  - [x] **database** - Displayed latest reviews. Currently this is not stored and will be wiped with refresh. Will use a database later.
+  - [x] **application logic** - The rating of a recipewill change based on the user's reviews.
+- [x] **Router** - Routing between pages and components.
+- [x] **Hooks** - Recipeprovider uses useState to provide recipes for the recipes page.
