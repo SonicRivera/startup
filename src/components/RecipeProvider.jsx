@@ -12,7 +12,8 @@ export const RecipeProvider = ({ children }) => {
             cookTime: "20 mins",
             servings: 4,
             category: "Main Course",
-            rating: 4
+            rating: 4,
+            image: "https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         }
     ]);
 

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecipes } from '../components/RecipeProvider';
 
 export function SubmitRecipe() {
     const navigate = useNavigate();
+    const { addRecipe } = useRecipes();
     const [formData, setFormData] = useState({
         recipeName: '',
         ingredients: '',
@@ -16,25 +18,27 @@ export function SubmitRecipe() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     const handleFileChange = (e) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            image: e.target.files[0],
-        }));
+        setFormData((prevData) => ({ ...prevData, image: e.target.files[0] }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        navigate('/'); // Navigate to the home page
-
-        // form submission logic
+        addRecipe({
+            name: formData.recipeName,
+            ingredients: formData.ingredients,
+            instructions: formData.instructions,
+            prepTime: formData.prepTime,
+            cookTime: formData.cookTime,
+            servings: formData.servings,
+            category: formData.category,
+            image: formData.image,
+            rating: 0
+        });
+        navigate('/recipes'); // Navigate to the recipes page after submission
     };
 
     return (
