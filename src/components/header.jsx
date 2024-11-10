@@ -21,7 +21,7 @@ export function Header({ username }) {
                                 placeholder="Search Recipes"
                                 aria-label="Search"
                             />
-                            <button className="btn btn-outline-primary" type="submit">Search</button>
+                            <Link to="/" className="btn btn-outline-primary" type="submit">Search</Link>
                         </form>
                     </div>
                     <div className="col-2">
