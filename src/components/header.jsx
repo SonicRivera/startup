@@ -25,7 +25,7 @@ export function Header({ username }) {
                         </form>
                     </div>
                     <div className="col-2">
-                    <Link to="/login" className="btn btn-primary">
+                        <Link to="/login" className="btn btn-primary">
                             Welcome <span id="username">{username}</span>
                         </Link>
                     </div>
