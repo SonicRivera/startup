@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 
-export function Header() {
+export function Header({ username }) {
+
+
     return (
         <header>
             <div className="container-fluid">
@@ -13,19 +15,19 @@ export function Header() {
                     </div>
                     <div className="col-3">
                         <form className="d-flex">
-                            <input 
-                                className="form-control me-2" 
-                                type="search" 
-                                placeholder="Search Recipes" 
-                                aria-label="Search" 
+                            <input
+                                className="form-control me-2"
+                                type="search"
+                                placeholder="Search Recipes"
+                                aria-label="Search"
                             />
                             <button className="btn btn-outline-primary" type="submit">Search</button>
                         </form>
                     </div>
                     <div className="col-2">
-                        <button type="button" className="btn btn-primary">
-                            Welcome <span id="username">Username</span>
-                        </button>
+                    <Link to="/login" className="btn btn-primary">
+                            Welcome <span id="username">{username}</span>
+                        </Link>
                     </div>
                 </div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light w-100">
@@ -38,3 +40,5 @@ export function Header() {
         </header>
     );
 }
+
+export default Header;

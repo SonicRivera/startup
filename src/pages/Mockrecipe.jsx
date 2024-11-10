@@ -49,36 +49,6 @@ export function MockRecipe() {
             </section>
 
             <Reviews />
-
-            <section className="container mt-5">
-                <form className="bg-light p-4 rounded shadow-sm">
-                    <div className="mb-3">
-                        <label htmlFor="rating" className="form-label">Rating (1 to 5):</label>
-                        <input 
-                            type="number" 
-                            className="form-control" 
-                            id="rating" 
-                            name="rating" 
-                            min="1" 
-                            max="5" 
-                            required 
-                        />
-                    </div>
-
-                    <div className="mb-3">
-                        <label htmlFor="review" className="form-label">Your Review:</label>
-                        <textarea 
-                            className="form-control" 
-                            id="review" 
-                            name="review" 
-                            rows="5" 
-                            required 
-                        ></textarea>
-                    </div>
-
-                    <button type="submit" className="btn btn-primary">Submit Review</button>
-                </form>
-            </section>
         </main>
     );
 }
