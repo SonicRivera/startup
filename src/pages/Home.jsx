@@ -2,6 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export function Home() {
+
+    const [quote, setQuote] = React.useState('Loading...');
+
+    React.useEffect(() => {
+        fetch('https://api.kanye.rest/')
+            .then((response) => response.json())
+            .then((data) => {
+                setQuote(data.quote);
+            })
+            .catch((error) => {
+                console.error('Error fetching quote:', error);
+                setQuote('Failed to load quote');
+            });
+    }, []);
+
     return (
         <>
             <div>
@@ -76,6 +91,12 @@ export function Home() {
                                 </p>
                             </div>
                         </div>
+                    </div>
+                </section>
+                <section>
+                    <div className="container text-center my-5">
+                        <p className='quote'>"{quote}"</p>
+                        <p className='author'>- Kanye West</p>
                     </div>
                 </section>
             </div>
