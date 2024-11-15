@@ -31,3 +31,9 @@ I set up a github repository for my startup and learned the basics of version ma
 
 ### Startup HTML:
 I learned and practiced more HTML and implemented what I learned into my startup wesbite. I learned how to put images and links into my webpage as well as how to create a form for logging in.
+
+
+## TODO:
+Simple Authentication  
+Posting persistent rescipes
+posting persistent reviews
