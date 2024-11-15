@@ -37,3 +37,4 @@ I learned and practiced more HTML and implemented what I learned into my startup
 Simple Authentication  
 Posting persistent rescipes
 posting persistent reviews
+Get quote from third party api `https://www.api-ninjas.com/api/quotes`
