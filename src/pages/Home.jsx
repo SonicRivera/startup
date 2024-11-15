@@ -95,6 +95,7 @@ export function Home() {
                 </section>
                 <section>
                     <div className="container text-center my-5">
+                        <h3>Kanye Quote:</h3>
                         <p className='quote'>"{quote}"</p>
                         <p className='author'>- Kanye West</p>
                     </div>
