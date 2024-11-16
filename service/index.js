@@ -121,7 +121,7 @@ apiRouter.post('/recipes/:id/reviews', (req, res) => {
 
     // Calculate the new average rating
     const totalRating = recipe.reviews.reduce((sum, review) => sum + review.rating, 0);
-    recipe.rating = totalRating / recipe.reviews.length;
+    recipe.rating = Math.round(totalRating / recipe.reviews.length);
 
     res.status(201).json(review);
   } else {

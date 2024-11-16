@@ -4,7 +4,7 @@ export function Reviews({ reviews, setAverageRating, username, recipeId }) {
     const [newReview, setNewReview] = useState({ rating: '', text: '', author: username });
 
     useEffect(() => {
-        const average = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+        const average = Math.round(reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length);
         setAverageRating(average);
     }, [reviews, setAverageRating]);
 

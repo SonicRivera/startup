@@ -34,6 +34,3 @@ I learned and practiced more HTML and implemented what I learned into my startup
 
 
 ## TODO:
-Simple Authentication  
-Posting persistent rescipes
-posting persistent reviews
