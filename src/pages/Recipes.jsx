@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecipes } from '../components/RecipeProvider';
 
 export function Recipes() {
-    const { recipes } = useRecipes();
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/api/recipes');
+                const data = await response.json();
+                setRecipes(data);
+            } catch (error) {
+                console.error('Error fetching recipes:', error);
+            }
+        };
+
+        fetchRecipes();
+    }, []);
 
     return (
         <div>
@@ -17,17 +30,17 @@ export function Recipes() {
                                     <img
                                         src={recipe.image || "https://via.placeholder.com/150"}
                                         className="card-img-top"
-                                        alt={recipe.name}
+                                        alt={recipe.recipeName}
                                         style={{ width: '100%', height: 'auto' }}
                                     />
                                 </Link>
                                 <div className="card-body text-center">
                                     <h5 className="card-title">
                                         <Link to={`/mockrecipe`}>
-                                            {recipe.name}
+                                            {recipe.recipeName}
                                         </Link>
                                     </h5>
-                                    <p className="card-text">Rating: {recipe.rating} ★</p>
+                                    <p className="card-text">Rating: {recipe.rating || 0} ★</p>
                                 </div>
                             </div>
                         </div>

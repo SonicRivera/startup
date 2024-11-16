@@ -11,14 +11,12 @@ import { About } from './pages/About';
 import { Bad } from './pages/Bad'
 import { Recipes } from './pages/Recipes'
 import { SubmitRecipe } from './pages/SubmitRecipe';
-import { RecipeProvider } from './components/RecipeProvider';
 
 export default function App() {
   const [username, setUsername] = useState('');
 
   return (
     <>
-      <RecipeProvider>
         <BrowserRouter>
           <Header username={username} />
 
@@ -36,7 +34,6 @@ export default function App() {
         </BrowserRouter>
 
         <Footer />
-      </RecipeProvider>
     </>
   );
 }

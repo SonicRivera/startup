@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecipes } from '../components/RecipeProvider';
 
 export function SubmitRecipe() {
     const navigate = useNavigate();
-    const { addRecipe } = useRecipes();
     const [formData, setFormData] = useState({
         recipeName: '',
         ingredients: '',
@@ -25,10 +23,10 @@ export function SubmitRecipe() {
         setFormData((prevData) => ({ ...prevData, image: e.target.files[0] }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addRecipe({
-            name: formData.recipeName,
+        const recipeData = {
+            recipeName: formData.recipeName,
             ingredients: formData.ingredients,
             instructions: formData.instructions,
             prepTime: formData.prepTime,
@@ -36,9 +34,25 @@ export function SubmitRecipe() {
             servings: formData.servings,
             category: formData.category,
             image: formData.image,
-            rating: 0
-        });
-        navigate('/recipes'); // Navigate to the recipes page after submission
+        };
+
+        try {
+            const response = await fetch('http://localhost:4000/api/newrecipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(recipeData),
+            });
+
+            if (response.ok) {
+                navigate('/recipes'); // Navigate to the recipes page after submission
+            } else {
+                console.error('Failed to submit recipe');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
