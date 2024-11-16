@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ setUsername }) => {
-  const [username, setUsernameInput] = useState('');
+const Register = () => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/api/auth/login', {
+      const response = await fetch('http://localhost:4000/api/auth/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -18,12 +18,9 @@ const Login = ({ setUsername }) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setUsername(username);
-        localStorage.setItem('token', data.token);
-        navigate('/'); // Navigate to the home page
+        navigate('/login'); // Navigate to the login page
       } else {
-        console.error('Failed to login');
+        console.error('Failed to register');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -42,7 +39,7 @@ const Login = ({ setUsername }) => {
           />
         </div>
         <div className="col-6 d-flex flex-column justify-content-center align-items-center">
-          <h2 className="mb-4">Login</h2>
+          <h2 className="mb-4">Register</h2>
           <form onSubmit={handleSubmit} className="w-100">
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Username</label>
@@ -51,7 +48,7 @@ const Login = ({ setUsername }) => {
                 className="form-control"
                 placeholder="Enter your username"
                 value={username}
-                onChange={(e) => setUsernameInput(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -66,7 +63,7 @@ const Login = ({ setUsername }) => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">Login</button>
+            <button type="submit" className="btn btn-primary w-100">Register</button>
           </form>
         </div>
       </div>
@@ -74,4 +71,4 @@ const Login = ({ setUsername }) => {
   );
 };
 
-export default Login;
+export default Register;

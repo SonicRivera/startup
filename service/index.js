@@ -48,7 +48,7 @@ let recipes = [{
   category: "Main Course",
   rating: 5,
   image: "https://images.pexels.com/photos/26597663/pexels-photo-26597663/free-photo-of-close-up-of-pasta-with-meat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-},];
+}];
 
 app.use(cors());
 app.use(express.json());
@@ -56,7 +56,7 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 // New Recipe
 apiRouter.post('/newrecipe', async (req, res) => {
@@ -76,46 +76,56 @@ apiRouter.get('/recipes', (req, res) => {
   res.json(recipes);
 });
 
-// CreateAuth a new user
+// Create a new user
 apiRouter.post('/auth/create', async (req, res) => {
-  const user = users[req.body.email];
-  if (user) {
-    res.status(409).send({ msg: 'Existing user' });
-  } else {
-    const user = { email: req.body.email, password: req.body.password, token: uuid.v4() };
-    users[user.email] = user;
-
-    res.send({ token: user.token });
+  const { username, password } = req.body;
+  if (users[username]) {
+    return res.status(409).send({ msg: 'User already exists' });
   }
+
+  const user = { username, password, token: uuid.v4() };
+  users[username] = user;
+  res.status(201).send({ token: user.token });
 });
 
-// GetAuth login an existing user
+// Login an existing user
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = users[req.body.email];
-  if (user) {
-    if (req.body.password === user.password) {
-      user.token = uuid.v4();
-      res.send({ token: user.token });
-      return;
-    }
+  const { username, password } = req.body;
+  const user = users[username];
+
+  if (user && user.password === password) {
+    user.token = uuid.v4();
+    res.send({ token: user.token });
+  } else {
+    res.status(401).send({ msg: 'Invalid credentials' });
   }
-  res.status(401).send({ msg: 'Unauthorized' });
 });
 
-// DeleteAuth logout a user
-apiRouter.delete('/auth/logout', (req, res) => {
-  const user = Object.values(users).find((u) => u.token === req.body.token);
+// Logout a user
+apiRouter.post('/auth/logout', (req, res) => {
+  const { token } = req.body;
+  const user = Object.values(users).find(u => u.token === token);
+
   if (user) {
     delete user.token;
+    res.status(204).end();
+  } else {
+    res.status(401).send({ msg: 'Invalid token' });
   }
-  res.status(204).end();
 });
 
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+// Get user data
+apiRouter.get('/auth/me', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  const user = Object.values(users).find(u => u.token === token);
+
+  if (user) {
+    res.json({ username: user.username });
+  } else {
+    res.status(401).send({ msg: 'Invalid token' });
+  }
 });
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-})
+  console.log(`Server running on http://localhost:${port}`);
+});
