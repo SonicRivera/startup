@@ -6,6 +6,7 @@ const app = express();
 // Store users and recipes
 let users = {};
 let recipes = [{
+  id: uuid.v4(),
   recipeName: "Garlic Tuscan Salmon",
   ingredients: "Salmon, garlic, sun-dried tomatoes, spinach",
   instructions: "Pan-sear salmon and top with creamy garlic sauce.",
@@ -14,9 +15,15 @@ let recipes = [{
   servings: 4,
   category: "Main Course",
   rating: 4,
-  image: "https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  image: "https://images.pexels.com/photos/5638539/pexels-photo-5638539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  reviews: [
+    { rating: 5, text: "Absolutely delicious! The sauce was heavenly.", author: "Sarah L." },
+    { rating: 4, text: "Quick and easy to make. Perfect for weeknight dinners.", author: "James R." },
+    { rating: 5, text: "Good balance between pasta and meat, very delicious!", author: "Lauren R." }
+  ]
 },
 {
+  id: uuid.v4(),
   recipeName: "Chicken Tikka Masala",
   ingredients: "Chicken, Tikka, Masala",
   instructions: "Cook it.",
@@ -25,9 +32,15 @@ let recipes = [{
   servings: 4,
   category: "Main Course",
   rating: 5,
-  image: "https://images.pexels.com/photos/27287005/pexels-photo-27287005/free-photo-of-a-plate-of-food-with-rice-and-vegetables-on-it.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  image: "https://images.pexels.com/photos/27287005/pexels-photo-27287005/free-photo-of-a-plate-of-food-with-rice-and-vegetables-on-it.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  reviews: [
+    { rating: 5, text: "The best Chicken Tikka Masala I've ever had!", author: "Emily K." },
+    { rating: 4, text: "Very flavorful and easy to make.", author: "Michael B." },
+    { rating: 5, text: "My family loved it. Will make again!", author: "Jessica T." }
+  ]
 },
 {
+  id: uuid.v4(),
   recipeName: "Chow-mein Stir Fry",
   ingredients: "Chow mein, Stir, Fry",
   instructions: "Cook it.",
@@ -36,9 +49,15 @@ let recipes = [{
   servings: 2,
   category: "Main Course",
   rating: 4,
-  image: "https://images.pexels.com/photos/18698263/pexels-photo-18698263/free-photo-of-food-photography.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  image: "https://images.pexels.com/photos/18698263/pexels-photo-18698263/free-photo-of-food-photography.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  reviews: [
+    { rating: 4, text: "Great flavors and easy to make.", author: "David P." },
+    { rating: 3, text: "Good, but could use more seasoning.", author: "Anna W." },
+    { rating: 4, text: "Quick and tasty meal.", author: "Chris M." }
+  ]
 },
 {
+  id: uuid.v4(),
   recipeName: "Spaghetti Carbonara",
   ingredients: "Spaghetti, carbonara",
   instructions: "Cook it.",
@@ -47,7 +66,12 @@ let recipes = [{
   servings: 8,
   category: "Main Course",
   rating: 5,
-  image: "https://images.pexels.com/photos/26597663/pexels-photo-26597663/free-photo-of-close-up-of-pasta-with-meat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+  image: "https://images.pexels.com/photos/26597663/pexels-photo-26597663/free-photo-of-close-up-of-pasta-with-meat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  reviews: [
+    { rating: 5, text: "Classic and delicious. Perfectly creamy.", author: "Sophia L." },
+    { rating: 4, text: "Easy to make and very tasty.", author: "Daniel G." },
+    { rating: 5, text: "A family favorite. Will make again!", author: "Olivia H." }
+  ]
 }];
 
 app.use(cors());
@@ -66,7 +90,7 @@ apiRouter.post('/newrecipe', async (req, res) => {
     return res.status(400).send({ msg: 'All fields are required' });
   }
 
-  const recipe = { id: uuid.v4(), recipeName, ingredients, instructions, prepTime, cookTime, servings, category, image };
+  const recipe = { id: uuid.v4(), recipeName, ingredients, instructions, prepTime, cookTime, servings, category, image, reviews: [] };
   recipes.push(recipe);
   res.status(201).json(recipe);
 });
@@ -74,6 +98,35 @@ apiRouter.post('/newrecipe', async (req, res) => {
 // Get Recipes
 apiRouter.get('/recipes', (req, res) => {
   res.json(recipes);
+});
+
+// Get a specific recipe by ID
+apiRouter.get('/recipes/:id', (req, res) => {
+  const recipe = recipes.find(r => r.id === req.params.id);
+  if (recipe) {
+    res.json(recipe);
+  } else {
+    res.status(404).send({ msg: 'Recipe not found' });
+  }
+});
+
+// Add a review to a recipe
+apiRouter.post('/recipes/:id/reviews', (req, res) => {
+  const { rating, text, author } = req.body;
+  const recipe = recipes.find(r => r.id === req.params.id);
+
+  if (recipe) {
+    const review = { rating, text, author };
+    recipe.reviews.push(review);
+
+    // Calculate the new average rating
+    const totalRating = recipe.reviews.reduce((sum, review) => sum + review.rating, 0);
+    recipe.rating = totalRating / recipe.reviews.length;
+
+    res.status(201).json(review);
+  } else {
+    res.status(404).send({ msg: 'Recipe not found' });
+  }
 });
 
 // Create a new user

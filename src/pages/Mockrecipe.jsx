@@ -1,10 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Reviews from '../components/Reviews';
 
 export function MockRecipe({ username }) {
+    const { id } = useParams();
+    const [recipe, setRecipe] = useState(null);
     const [averageRating, setAverageRating] = useState(0);
 
-    const renderStars = (rating) => '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    useEffect(() => {
+        const fetchRecipe = async () => {
+            try {
+                const response = await fetch(`http://localhost:4000/api/recipes/${id}`);
+                const data = await response.json();
+                setRecipe(data);
+                setAverageRating(data.rating);
+            } catch (error) {
+                console.error('Error fetching recipe:', error);
+            }
+        };
+
+        fetchRecipe();
+    }, [id]);
+
+    const renderStars = (rating) => {
+        if (isNaN(rating) || rating < 0) {
+            rating = 0;
+        } else if (rating > 5) {
+            rating = 5;
+        }
+        return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    };
+
+    if (!recipe) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <main>
@@ -13,45 +42,33 @@ export function MockRecipe({ username }) {
                     <div className="row g-0">
                         <div className="col-md-4 d-flex align-items-center">
                             <img 
-                                src="https://images.pexels.com/photos/725990/pexels-photo-725990.jpeg" 
+                                src={recipe.image} 
                                 className="img-fluid rounded-start" 
-                                alt="Spaghetti Carbonara"
+                                alt={recipe.recipeName}
                             />
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
-                                <h1 className="card-title">Spaghetti Carbonara Recipe</h1>
+                                <h1 className="card-title">{recipe.recipeName}</h1>
                                 <p><span className="revstars">{renderStars(averageRating)}</span></p>
                                 <h2 className="card-subtitle mb-3">Ingredients</h2>
                                 <ul>
-                                    <li>200g Spaghetti</li>
-                                    <li>100g Pancetta or Bacon</li>
-                                    <li>2 Large Eggs</li>
-                                    <li>50g Pecorino Cheese</li>
-                                    <li>50g Parmesan Cheese</li>
-                                    <li>2 Garlic Cloves (optional)</li>
-                                    <li>Freshly Ground Black Pepper</li>
-                                    <li>Salt</li>
+                                    {recipe.ingredients.split(',').map((ingredient, index) => (
+                                        <li key={index}>{ingredient}</li>
+                                    ))}
                                 </ul>
+                                <h2 className="card-subtitle mb-3">Instructions</h2>
+                                <p>{recipe.instructions}</p>
+                                <p><strong>Prep Time:</strong> {recipe.prepTime}</p>
+                                <p><strong>Cook Time:</strong> {recipe.cookTime}</p>
+                                <p><strong>Servings:</strong> {recipe.servings}</p>
+                                <p><strong>Category:</strong> {recipe.category}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h2>Instructions</h2>
-                <ol>
-                    <li>Boil the spaghetti in salted water according to the package instructions.</li>
-                    <li>Fry the pancetta or bacon until crispy. Set aside.</li>
-                    <li>In a bowl, whisk together the eggs and grated cheeses (Pecorino and Parmesan).</li>
-                    <li>If using, lightly fry the garlic cloves in the bacon fat, then discard.</li>
-                    <li>Drain the spaghetti, reserving a little cooking water.</li>
-                    <li>Toss the spaghetti with the pancetta and garlic (if used).</li>
-                    <li>Off the heat, mix in the egg and cheese mixture, stirring quickly.</li>
-                    <li>Add a splash of the reserved cooking water to loosen the sauce if needed.</li>
-                    <li>Season with freshly ground black pepper and serve immediately.</li>
-                </ol>
-
-                <Reviews setAverageRating={setAverageRating} username={username} />
+                <Reviews reviews={recipe.reviews} setAverageRating={setAverageRating} username={username} recipeId={id} />
             </section>
         </main>
     );

@@ -26,7 +26,7 @@ export function Recipes() {
                     {recipes.map((recipe, index) => (
                         <div key={index} className="col-md-4 mb-4">
                             <div className="card">
-                                <Link to={`/mockrecipe`}>
+                                <Link to={`/recipe/${recipe.id}`}>
                                     <img
                                         src={recipe.image || "https://via.placeholder.com/150"}
                                         className="card-img-top"
@@ -36,7 +36,7 @@ export function Recipes() {
                                 </Link>
                                 <div className="card-body text-center">
                                     <h5 className="card-title">
-                                        <Link to={`/mockrecipe`}>
+                                        <Link to={`/recipe/${recipe.id}`}>
                                             {recipe.recipeName}
                                         </Link>
                                     </h5>

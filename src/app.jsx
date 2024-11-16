@@ -5,7 +5,7 @@ import { Header } from './components/Header';
 import { Home } from './pages/Home';
 import { Footer } from './components/Footer';
 import { NotFound } from './pages/NotFound';
-import { MockRecipe } from './pages/MockRecipe';
+import { MockRecipe } from './pages/Mockrecipe';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { About } from './pages/About';
@@ -46,7 +46,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/mockrecipe' element={<MockRecipe username={username} />} />
+          <Route path='/recipe/:id' element={<MockRecipe username={username} />} />
           <Route path='/login' element={<Login setUsername={setUsername} />} />
           <Route path='/register' element={<Register />} />
           <Route path='/about' element={<About />} />

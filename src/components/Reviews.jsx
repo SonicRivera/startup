@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const initialReviews = [
-    { rating: 5, text: '“Absolutely delicious! The sauce was heavenly!”', author: 'Sarah L.' },
-    { rating: 4, text: '“Quick and easy to make. Perfect for weeknight dinners!”', author: 'James R.' },
-    { rating: 5, text: '“Good balance between pasta and meat, very delicious!”', author: 'Lauren R.' }
-];
-
-export function Reviews({ setAverageRating, username }) {
-    const [reviews, setReviews] = useState(initialReviews);
+export function Reviews({ reviews, setAverageRating, username, recipeId }) {
     const [newReview, setNewReview] = useState({ rating: '', text: '', author: username });
 
     useEffect(() => {
@@ -20,20 +13,46 @@ export function Reviews({ setAverageRating, username }) {
         setNewReview((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (newReview.rating && newReview.text && newReview.author) {
-            setReviews((prev) => [...prev, { ...newReview, rating: parseInt(newReview.rating) }]);
-            setNewReview({ rating: '', text: '', author: username });
+            try {
+                const response = await fetch(`http://localhost:4000/api/recipes/${recipeId}/reviews`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newReview),
+                });
+
+                if (response.ok) {
+                    const review = await response.json();
+                    reviews.push(review);
+                    setNewReview({ rating: '', text: '', author: username });
+                } else {
+                    console.error('Failed to submit review');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     };
 
-    const renderStars = (rating) => '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    const renderStars = (rating) => {
+        if (isNaN(rating) || rating < 0) {
+            rating = 0;
+        } else if (rating > 5) {
+            rating = 5;
+        }
+        return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    };
+
+    // Get the three most recent reviews
     const recentReviews = reviews.slice(-3);
 
     return (
         <section className="container my-4">
-            <h2 className="text-center mb-4">User Reviews</h2>
+            <h2 className="text-center mb-4">Recent User Reviews</h2>
             {recentReviews.map((review, index) => (
                 <blockquote key={index} className="blockquote text-center mb-4">
                     <p>
