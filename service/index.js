@@ -6,27 +6,27 @@ const app = express();
 let users = {};
 let recipes = [];
 
+app.use(express.json());
+var apiRouter = express.Router();
+app.use(`/api`, apiRouter);
+
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
+app.use(express.static('public'));
+
+
+//New Recipe
 apiRouter.post('/auth/newrecipe', async (req, res) => {
-  const { title, ingredients, instructions } = req.body;
+  const { recipeName, ingredients, instructions, prepTime, cookTime, servings, category, image } = req.body;
+
+  if (!recipeName || !ingredients || !instructions || !prepTime || !cookTime || !servings || !category) {
+    return res.status(400).send({ msg: 'All fields are required' });
+  }
+
   const recipe = { recipeName, ingredients, instructions, prepTime, cookTime, servings, category, image };
   recipes.push(recipe);
   res.status(201).send(recipe);
 });
 
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
-app.use(express.static('public'));
-
-// JSON body parsing using built-in middleware
-app.use(express.json());
-
-
-var apiRouter = express.Router();
-app.use(`/api`, apiRouter);
-
-// New recipe
-apiRouter.post('/auth/newrecipe', async (req, res) => {
-
-});
 
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
