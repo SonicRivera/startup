@@ -6,9 +6,9 @@ const initialReviews = [
     { rating: 5, text: '“Good balance between pasta and meat, very delicious!”', author: 'Lauren R.' }
 ];
 
-export function Reviews({ setAverageRating }) {
+export function Reviews({ setAverageRating, username }) {
     const [reviews, setReviews] = useState(initialReviews);
-    const [newReview, setNewReview] = useState({ rating: '', text: '', author: '' });
+    const [newReview, setNewReview] = useState({ rating: '', text: '', author: username });
 
     useEffect(() => {
         const average = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
@@ -24,7 +24,7 @@ export function Reviews({ setAverageRating }) {
         e.preventDefault();
         if (newReview.rating && newReview.text && newReview.author) {
             setReviews((prev) => [...prev, { ...newReview, rating: parseInt(newReview.rating) }]);
-            setNewReview({ rating: '', text: '', author: '' });
+            setNewReview({ rating: '', text: '', author: username });
         }
     };
 
@@ -42,48 +42,40 @@ export function Reviews({ setAverageRating }) {
                 </blockquote>
             ))}
 
-            <h3 className="text-center mt-5">Add a Review</h3>
-            <form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow-sm">
-                <div className="mb-3">
-                    <label htmlFor="rating" className="form-label">Rating (1 to 5):</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="rating"
-                        name="rating"
-                        value={newReview.rating}
-                        onChange={handleChange}
-                        min="1"
-                        max="5"
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="text" className="form-label">Your Review:</label>
-                    <textarea
-                        className="form-control"
-                        id="text"
-                        name="text"
-                        rows="3"
-                        value={newReview.text}
-                        onChange={handleChange}
-                        required
-                    ></textarea>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="author" className="form-label">Your Name:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="author"
-                        name="author"
-                        value={newReview.author}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary">Submit Review</button>
-            </form>
+            {username && (
+                <>
+                    <h3 className="text-center mt-5">Add a Review</h3>
+                    <form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow-sm">
+                        <div className="mb-3">
+                            <label htmlFor="rating" className="form-label">Rating (1 to 5):</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="rating"
+                                name="rating"
+                                value={newReview.rating}
+                                onChange={handleChange}
+                                min="1"
+                                max="5"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="text" className="form-label">Your Review:</label>
+                            <textarea
+                                className="form-control"
+                                id="text"
+                                name="text"
+                                rows="3"
+                                value={newReview.text}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </div>
+                        <button type="submit" className="btn btn-primary">Submit Review</button>
+                    </form>
+                </>
+            )}
         </section>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Reviews from '../components/Reviews';
 
-export function MockRecipe() {
+export function MockRecipe({ username }) {
     const [averageRating, setAverageRating] = useState(0);
 
     const renderStars = (rating) => '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
@@ -50,9 +50,9 @@ export function MockRecipe() {
                     <li>Add a splash of the reserved cooking water to loosen the sauce if needed.</li>
                     <li>Season with freshly ground black pepper and serve immediately.</li>
                 </ol>
-            </section>
 
-            <Reviews setAverageRating={setAverageRating} />
+                <Reviews setAverageRating={setAverageRating} username={username} />
+            </section>
         </main>
     );
 }

@@ -46,7 +46,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/mockrecipe' element={<MockRecipe />} />
+          <Route path='/mockrecipe' element={<MockRecipe username={username} />} />
           <Route path='/login' element={<Login setUsername={setUsername} />} />
           <Route path='/register' element={<Register />} />
           <Route path='/about' element={<About />} />
