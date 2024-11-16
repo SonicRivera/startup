@@ -116,7 +116,7 @@ apiRouter.post('/recipes/:id/reviews', (req, res) => {
   const recipe = recipes.find(r => r.id === req.params.id);
 
   if (recipe) {
-    const review = { rating, text, author };
+    const review = { rating: parseInt(rating), text, author };
     recipe.reviews.push(review);
 
     // Calculate the new average rating
