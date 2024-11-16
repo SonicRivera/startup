@@ -17,7 +17,7 @@ export function Reviews({ reviews, setAverageRating, username, recipeId }) {
         e.preventDefault();
         if (newReview.rating && newReview.text && newReview.author) {
             try {
-                const response = await fetch(`http://localhost:4000/api/recipes/${recipeId}/reviews`, {
+                const response = await fetch(`/recipes/${recipeId}/reviews`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

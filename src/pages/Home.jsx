@@ -7,7 +7,7 @@ export function Home() {
     useEffect(() => {
         const fetchFeaturedRecipes = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/recipes');
+                const response = await fetch('/api/recipes');
                 const data = await response.json();
                 // Assuming the first three recipes are featured
                 setFeaturedRecipes(data.slice(0, 3));

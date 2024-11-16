@@ -37,7 +37,7 @@ export function SubmitRecipe() {
         };
 
         try {
-            const response = await fetch('http://localhost:4000/api/newrecipe', {
+            const response = await fetch('/api/newrecipe', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

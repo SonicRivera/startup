@@ -10,7 +10,7 @@ export function MockRecipe({ username }) {
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/recipes/${id}`);
+                const response = await fetch(`/api/recipes/${id}`);
                 const data = await response.json();
                 setRecipe(data);
                 setAverageRating(data.rating);

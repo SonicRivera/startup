@@ -20,7 +20,7 @@ export default function App() {
     const token = localStorage.getItem('token');
     if (token) {
       // Fetch the user data using the token
-      fetch('http://localhost:4000/api/auth/me', {
+      fetch('/api/auth/me', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
