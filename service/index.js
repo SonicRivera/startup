@@ -145,7 +145,6 @@ apiRouter.post('/auth/create', async (req, res) => {
   const user = { username, password, token: uuid.v4() };
   users[username] = user;
   res.status(201).send({ token: user.token });
-  console.log("Successfully created user: ", user);
 });
 
 // Login an existing user
