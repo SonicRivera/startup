@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 export function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
+    const [quote, setQuote] = React.useState('Loading...');
 
     useEffect(() => {
         const fetchFeaturedRecipes = async () => {
@@ -15,6 +16,16 @@ export function Home() {
                 console.error('Error fetching featured recipes:', error);
             }
         };
+
+        fetch('https://api.kanye.rest/')
+            .then((response) => response.json())
+            .then((data) => {
+                setQuote(data.quote);
+            })
+            .catch((error) => {
+                console.error('Error fetching quote:', error);
+                setQuote('Failed to load quote');
+            });
 
         fetchFeaturedRecipes();
     }, []);
@@ -60,8 +71,20 @@ export function Home() {
                 <section>
                     <div className="container">
                         <div className="row align-items-start my-5">
-                            {/* Additional content can go here */}
+                            <div className="col">
+                                <h2>About Us</h2>
+                                <p>
+                                    Learn about this project at my <a href="https://github.com/SonicRivera/startup" className="text-decoration-none" target="_blank" rel="noopener noreferrer">GitHub page!</a>
+                                </p>
+                            </div>
                         </div>
+                    </div>
+                </section>
+                <section>
+                    <div className="container text-center my-5">
+                        <h3>Kanye Quote:</h3>
+                        <p className='quote'>"{quote}"</p>
+                        <p className='author'>- Kanye West</p>
                     </div>
                 </section>
             </div>
