@@ -6,7 +6,7 @@ export function Header({ username }) {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/');
     location.reload();
   };
 
