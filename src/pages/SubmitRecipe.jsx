@@ -28,7 +28,7 @@ export function SubmitRecipe() {
 
         try {
             // Fetch a random image from the Foodish API
-            const imageResponse = await fetch('https://foodish-api.com/api/images/random');
+            const imageResponse = await fetch('https://foodish-api.com/api');
             const imageData = await imageResponse.json();
             const imageUrl = imageData.image;
 
