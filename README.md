@@ -54,3 +54,15 @@ For this assignment I used JavaScript and React so the app works for a user. I a
   - [x] **application logic** - The rating of a recipewill change based on the user's reviews.
 - [x] **Router** - Routing between pages and components.
 - [x] **Hooks** - Recipeprovider uses useState to provide recipes for the recipes page.
+
+## Service deliverable
+
+For this deliverable, I added backend endpoints that handle user authentication, recipe management, and review submissions. I also added calls to third party APIS such as foodish and a Kanye West quote API
+
+- [x] **Node.js/Express HTTP service** - Implemented a Node.js/Express server to handle HTTP requests.
+- [x] **Static middleware for frontend** - Configured static middleware to serve the frontend.
+- [x] **User Authentication** - Added endpoints for user registration, login, and logout. User sessions are managed using tokens stored in local storage.
+- [x] **Recipe Management** - Created endpoints to add new recipes, fetch all recipes, and fetch a specific recipe by ID.
+- [x] **Review Submissions** - Implemented endpoints to submit reviews for recipes and calculate the average rating based on user reviews.
+- [x] **Frontend calls service endpoints** - Integrated the frontend with the backend using the fetch function to make API calls.
+- [x] **Calls to third party endpoints** - Newly added recipes will be given a random image from `https://foodish-api.com/` and there is also a random kanye west quote on the home page from `https://api.kanye.rest/`.
