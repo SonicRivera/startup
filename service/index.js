@@ -80,7 +80,7 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 // New Recipe
 apiRouter.post('/newrecipe', async (req, res) => {
@@ -139,6 +139,7 @@ apiRouter.post('/auth/create', async (req, res) => {
   const user = { username, password, token: uuid.v4() };
   users[username] = user;
   res.status(201).send({ token: user.token });
+  console.log("Successfully created user: ", user);
 });
 
 // Login an existing user
