@@ -74,7 +74,13 @@ let recipes = [{
   ]
 }];
 
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: 'https://startup.meltingpot.live',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
