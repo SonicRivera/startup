@@ -38,3 +38,4 @@ I learned and practiced more HTML and implemented what I learned into my startup
 
 
 ## TODO:
+Have reviews on recipe page update live
