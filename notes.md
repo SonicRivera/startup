@@ -17,6 +17,10 @@ React:
 
 `../deployReact.sh -k ../Security/CS260.pem -h meltingpot.live -s startup`
 
+Service:
+
+`./deployReact.sh -k ../Security/CS260.pem -h meltingpot.live -s startup`
+
 
 Also be sure to do the following in order to have the Icons work
 
