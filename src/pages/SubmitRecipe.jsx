@@ -25,18 +25,24 @@ export function SubmitRecipe() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const recipeData = {
-            recipeName: formData.recipeName,
-            ingredients: formData.ingredients,
-            instructions: formData.instructions,
-            prepTime: formData.prepTime,
-            cookTime: formData.cookTime,
-            servings: formData.servings,
-            category: formData.category,
-            image: formData.image,
-        };
 
         try {
+            // Fetch a random image from the Foodish API
+            const imageResponse = await fetch('https://foodish-api.com/api/images/random');
+            const imageData = await imageResponse.json();
+            const imageUrl = imageData.image;
+
+            const recipeData = {
+                recipeName: formData.recipeName,
+                ingredients: formData.ingredients,
+                instructions: formData.instructions,
+                prepTime: formData.prepTime,
+                cookTime: formData.cookTime,
+                servings: formData.servings,
+                category: formData.category,
+                image: imageUrl, // Use the random image URL
+            };
+
             const response = await fetch('/api/newrecipe', {
                 method: 'POST',
                 headers: {
@@ -162,18 +168,6 @@ export function SubmitRecipe() {
                                 <option value="international">International</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div className="mb-3">
-                        <label htmlFor="image" className="form-label">Upload Image:</label>
-                        <input
-                            type="file"
-                            id="image"
-                            name="image"
-                            className="form-control"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                        />
                     </div>
 
                     <button type="submit" className="btn btn-primary">Submit Recipe</button>
