@@ -2,6 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const uuid = require('uuid');
 const app = express();
+const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
+
+
+async function main() {
+  const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+  const client = new MongoClient(url);
+  const db = client.db('meltingDB');
+
+  // Test database connection
+  (async function testConnection() {
+    await client.connect();
+    await db.command({ ping: 1 });
+  })().catch((ex) => {
+    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    process.exit(1);
+  });
+}
 
 // Store users and recipes
 let users = {};
@@ -184,6 +202,8 @@ apiRouter.get('/auth/me', (req, res) => {
     res.status(401).send({ msg: 'Invalid token' });
   }
 });
+
+main().catch(console.error);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
