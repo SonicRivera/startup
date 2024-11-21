@@ -163,18 +163,19 @@ apiRouter.post('/newrecipe', authenticateToken, async (req, res) => {
   }
 
   const recipe = { id: uuid.v4(), recipeName, ingredients, instructions, prepTime, cookTime, servings, category, image, reviews: [] };
-  recipes.push(recipe);
+  await DB.insertRecipe(recipe);
   res.status(201).json(recipe);
 });
 
 // Get Recipes
-apiRouter.get('/recipes', (req, res) => {
+apiRouter.get('/recipes', async (req, res) => {
+  const recipes = await DB.getRecipes();
   res.json(recipes);
 });
 
 // Get a specific recipe by ID
-apiRouter.get('/recipes/:id', (req, res) => {
-  const recipe = recipes.find(r => r.id === req.params.id);
+apiRouter.get('/recipes/:id', async (req, res) => {
+  const recipe = await DB.getRecipeById(req.params.id);
   if (recipe) {
     res.json(recipe);
   } else {
@@ -183,9 +184,9 @@ apiRouter.get('/recipes/:id', (req, res) => {
 });
 
 // Add a review to a recipe
-apiRouter.post('/recipes/:id/reviews', authenticateToken, (req, res) => {
+apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
   const { rating, text } = req.body;
-  const recipe = recipes.find(r => r.id === req.params.id);
+  const recipe = await DB.getRecipeById(req.params.id);
 
   if (recipe) {
     const review = { rating: parseInt(rating), text, author: req.user.username };
@@ -195,6 +196,7 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, (req, res) => {
     const totalRating = recipe.reviews.reduce((sum, review) => sum + review.rating, 0);
     recipe.rating = Math.round(totalRating / recipe.reviews.length);
 
+    await DB.updateRecipe(req.params.id, recipe);
     res.status(201).json(review);
   } else {
     res.status(404).send({ msg: 'Recipe not found' });

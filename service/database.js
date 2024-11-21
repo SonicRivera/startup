@@ -7,6 +7,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('meltingDB');
 const userCollection = db.collection('users');
+const recipeCollection = db.collection('recipes');
 
 // Test connection
 (async function testConnection() {
@@ -25,4 +26,20 @@ function insertUser(user) {
     return userCollection.insertOne(user);
 }
 
-module.exports = { getUser, insertUser };
+function getRecipes() {
+    return recipeCollection.find().toArray();
+}
+
+function getRecipeById(id) {
+    return recipeCollection.findOne({ id: id });
+}
+
+function insertRecipe(recipe) {
+    return recipeCollection.insertOne(recipe);
+}
+
+function updateRecipe(id, update) {
+    return recipeCollection.updateOne({ id: id }, { $set: update });
+}
+
+module.exports = { getUser, insertUser, getRecipes, getRecipeById, insertRecipe, updateRecipe };
