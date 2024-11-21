@@ -18,10 +18,8 @@ const Login = ({ setUsername }) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         setUsername(username);
-        localStorage.setItem('token', data.token);
-        navigate('/'); // Navigate to the home page
+        navigate('/');
       } else {
         console.error('Failed to login');
       }

@@ -4,8 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 export function Header({ username }) {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+    });
     navigate('/');
     location.reload();
   };

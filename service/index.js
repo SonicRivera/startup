@@ -2,23 +2,36 @@ const express = require('express');
 const cors = require('cors');
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const app = express();
-const { MongoClient } = require('mongodb');
+const DB = require('./database.js');
 const config = require('./dbConfig.json');
 
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-const client = new MongoClient(url);
-let usersCollection;
+const JWT_SECRET = config.JWT_SECRET;
 
-async function main(){
-  await client.connect();
-  const db = client.db('meltingDB');
-  usersCollection = db. collection('users');
+app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
 
+var apiRouter = express.Router();
+app.use(`/api`, apiRouter);
+
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
+app.use(express.static('public'));
+
+// Middleware to verify JWT
+function authenticateToken(req, res, next) {
+  const token = req.cookies.token;
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
 }
-main().catch(console.error);
 
-// Store recipes
 let recipes = [{
   id: uuid.v4(),
   recipeName: "Garlic Tuscan Salmon",
@@ -88,22 +101,53 @@ let recipes = [{
   ]
 }];
 
-// CORS configuration
-const corsOptions = {
-  origin: 'https://startup.meltingpot.live',
-  optionsSuccessStatus: 200
-};
+// Create a new user
+apiRouter.post('/auth/create', async (req, res) => {
+  const { username, password } = req.body;
+  const existingUser = await DB.getUser(username);
 
-app.use(cors(corsOptions));
-app.use(express.json());
-var apiRouter = express.Router();
-app.use(`/api`, apiRouter);
+  if (existingUser) {
+    return res.status(409).send({ msg: 'User already exists' });
+  }
 
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
-app.use(express.static('public'));
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = { username, password: hashedPassword };
+  await DB.insertUser(user);
+  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' });
+  res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' }).status(201).send({ token });
+});
+
+// Login an existing user
+apiRouter.post('/auth/login', async (req, res) => {
+  const { username, password } = req.body;
+  const user = await DB.getUser(username);
+
+  if (user && await bcrypt.compare(password, user.password)) {
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' });
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' }).send({ token });
+  } else {
+    res.status(401).send({ msg: 'Invalid credentials' });
+  }
+});
+
+// Logout a user
+apiRouter.post('/auth/logout', (req, res) => {
+  res.clearCookie('token').status(204).end();
+});
+
+// Get user data
+apiRouter.get('/auth/me', authenticateToken, async (req, res) => {
+  const user = await DB.getUser(req.user.username);
+
+  if (user) {
+    res.json({ username: user.username });
+  } else {
+    res.status(401).send({ msg: 'Invalid token' });
+  }
+});
 
 // New Recipe
-apiRouter.post('/newrecipe', async (req, res) => {
+apiRouter.post('/newrecipe', authenticateToken, async (req, res) => {
   const { recipeName, ingredients, instructions, prepTime, cookTime, servings, category, image } = req.body;
 
   if (!recipeName || !ingredients || !instructions || !prepTime || !cookTime || !servings || !category) {
@@ -131,12 +175,12 @@ apiRouter.get('/recipes/:id', (req, res) => {
 });
 
 // Add a review to a recipe
-apiRouter.post('/recipes/:id/reviews', (req, res) => {
-  const { rating, text, author } = req.body;
+apiRouter.post('/recipes/:id/reviews', authenticateToken, (req, res) => {
+  const { rating, text } = req.body;
   const recipe = recipes.find(r => r.id === req.params.id);
 
   if (recipe) {
-    const review = { rating: parseInt(rating), text, author };
+    const review = { rating: parseInt(rating), text, author: req.user.username };
     recipe.reviews.push(review);
 
     // Calculate the new average rating
@@ -148,59 +192,6 @@ apiRouter.post('/recipes/:id/reviews', (req, res) => {
     res.status(404).send({ msg: 'Recipe not found' });
   }
 });
-
-// Create a new user
-apiRouter.post('/auth/create', async (req, res) => {
-  const { username, password } = req.body;
-  const existingUser = await usersCollection.findOne({ username });
-
-  if (existingUser) {
-    return res.status(409).send({ msg: 'User already exists' });
-  }
-
-  const user = { username, password, token: uuid.v4() };
-  await usersCollection.insertOne(user);
-  res.status(201).send({ token: user.token });
-});
-
-// Login an existing user
-apiRouter.post('/auth/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = await usersCollection.findOne({ username });
-
-  if (user && user.password === password) {
-    const token = uuid.v4();
-    await usersCollection.updateOne({ username }, { $set: { token } });
-    res.send({ token });
-  } else {
-    res.status(401).send({ msg: 'Invalid credentials' });
-  }
-});
-
-// Logout a user
-apiRouter.post('/auth/logout', async (req, res) => {
-  const { token } = req.body;
-  const result = await usersCollection.updateOne({ token }, { $unset: { token: "" } });
-
-  if (result.modifiedCount > 0) {
-    res.status(204).end();
-  } else {
-    res.status(401).send({ msg: 'Invalid token' });
-  }
-});
-
-// Get user data
-apiRouter.get('/auth/me', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  const user = await usersCollection.findOne({ token });
-
-  if (user) {
-    res.json({ username: user.username });
-  } else {
-    res.status(401).send({ msg: 'Invalid token' });
-  }
-});
-
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
