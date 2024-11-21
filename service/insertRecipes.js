@@ -90,4 +90,20 @@ async function insertRecipes() {
   }
 }
 
+async function clearRecipes() {
+    try {
+        await client.connect();
+        console.log('Connected to MongoDB');
+        const db = client.db(dbName);
+        const collection = db.collection('recipes');
+        const result = await collection.deleteMany({});
+      } catch (err) {
+        console.error('Error inserting recipes:', err);
+      } finally {
+        await client.close();
+      }
+}
+
 insertRecipes();
+
+// clearRecipes(); // use this when clearing recipes

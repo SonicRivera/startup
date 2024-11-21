@@ -38,7 +38,7 @@ I learned and practiced more HTML and implemented what I learned into my startup
 
 
 ## TODO:
+Change cors localhost to production
 Have reviews on recipe page update live
-Recipes stored on MongoDB
 Dashboard page
 Allow logged in users to save recipes to Dashboard

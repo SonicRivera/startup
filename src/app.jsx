@@ -17,25 +17,25 @@ export default function App() {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Fetch the user data using the token
-      fetch('/api/auth/me', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.username) {
-            setUsername(data.username);
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error);
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/me', {
+          method: 'GET',
+          credentials: 'include',
         });
-    }
+        if (response.ok) {
+          const data = await response.json();
+          setUsername(data.username);
+        } else {
+          setUsername('');
+        }
+      } catch (error) {
+        console.error('Error checking authentication status:', error);
+        setUsername('');
+      }
+    };
+
+    checkAuth();
   }, []);
 
   return (
