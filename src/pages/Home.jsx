@@ -4,14 +4,24 @@ import { Link } from 'react-router-dom';
 export function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
     const [quote, setQuote] = React.useState('Loading...');
+    let beg;
+    let end;
 
     useEffect(() => {
+
         const fetchFeaturedRecipes = async () => {
             try {
                 const response = await fetch('/api/recipes');
                 const data = await response.json();
+                if (data.length > 2){
+                    beg = data.length - 3;
+                    end = data.length;
+                    setFeaturedRecipes(data.slice(beg, end));
+                    
+                } else {
+                    setFeaturedRecipes(data.slice(0, 3));
+                }
                 // Assuming the first three recipes are featured
-                setFeaturedRecipes(data.slice(0, 3));
             } catch (error) {
                 console.error('Error fetching featured recipes:', error);
             }
