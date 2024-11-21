@@ -1,28 +1,24 @@
 const express = require('express');
 const cors = require('cors');
 const uuid = require('uuid');
+const bcrypt = require('bcrypt');
 const app = express();
 const { MongoClient } = require('mongodb');
 const config = require('./dbConfig.json');
 
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const client = new MongoClient(url);
+let usersCollection;
 
-async function main() {
-  const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-  const client = new MongoClient(url);
+async function main(){
+  await client.connect();
   const db = client.db('meltingDB');
+  usersCollection = db. collection('users');
 
-  // Test database connection
-  (async function testConnection() {
-    await client.connect();
-    await db.command({ ping: 1 });
-  })().catch((ex) => {
-    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
-    process.exit(1);
-  });
 }
+main().catch(console.error);
 
-// Store users and recipes
-let users = {};
+// Store recipes
 let recipes = [{
   id: uuid.v4(),
   recipeName: "Garlic Tuscan Salmon",
@@ -156,35 +152,37 @@ apiRouter.post('/recipes/:id/reviews', (req, res) => {
 // Create a new user
 apiRouter.post('/auth/create', async (req, res) => {
   const { username, password } = req.body;
-  if (users[username]) {
+  const existingUser = await usersCollection.findOne({ username });
+
+  if (existingUser) {
     return res.status(409).send({ msg: 'User already exists' });
   }
 
   const user = { username, password, token: uuid.v4() };
-  users[username] = user;
+  await usersCollection.insertOne(user);
   res.status(201).send({ token: user.token });
 });
 
 // Login an existing user
 apiRouter.post('/auth/login', async (req, res) => {
   const { username, password } = req.body;
-  const user = users[username];
+  const user = await usersCollection.findOne({ username });
 
   if (user && user.password === password) {
-    user.token = uuid.v4();
-    res.send({ token: user.token });
+    const token = uuid.v4();
+    await usersCollection.updateOne({ username }, { $set: { token } });
+    res.send({ token });
   } else {
     res.status(401).send({ msg: 'Invalid credentials' });
   }
 });
 
 // Logout a user
-apiRouter.post('/auth/logout', (req, res) => {
+apiRouter.post('/auth/logout', async (req, res) => {
   const { token } = req.body;
-  const user = Object.values(users).find(u => u.token === token);
+  const result = await usersCollection.updateOne({ token }, { $unset: { token: "" } });
 
-  if (user) {
-    delete user.token;
+  if (result.modifiedCount > 0) {
     res.status(204).end();
   } else {
     res.status(401).send({ msg: 'Invalid token' });
@@ -192,9 +190,9 @@ apiRouter.post('/auth/logout', (req, res) => {
 });
 
 // Get user data
-apiRouter.get('/auth/me', (req, res) => {
+apiRouter.get('/auth/me', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
-  const user = Object.values(users).find(u => u.token === token);
+  const user = await usersCollection.findOne({ token });
 
   if (user) {
     res.json({ username: user.username });
@@ -203,7 +201,6 @@ apiRouter.get('/auth/me', (req, res) => {
   }
 });
 
-main().catch(console.error);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
