@@ -9,8 +9,15 @@ const DB = require('./database.js');
 const config = require('./dbConfig.json');
 
 const JWT_SECRET = config.JWT_SECRET;
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:5173/', // use when not developing https://startup.meltingpot.live/
+  optionsSuccessStatus: 200,
+  credentials: true // Allow credentials (cookies) to be sent
 
-app.use(cors());
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
