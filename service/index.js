@@ -9,11 +9,12 @@ const DB = require('./database.js');
 const config = require('./dbConfig.json');
 
 const JWT_SECRET = config.JWT_SECRET;
+
 // CORS configuration
 const corsOptions = {
-  origin: 'http://localhost:5173/', // use when not developing https://startup.meltingpot.live/
+  origin: 'http://localhost:5173/', // Switch to 'https://startup.meltingpot.live/' for production
   optionsSuccessStatus: 200,
-  credentials: true // Allow credentials (cookies) to be sent
+  credentials: true
 
 };
 

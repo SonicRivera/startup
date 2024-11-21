@@ -39,8 +39,6 @@ I learned and practiced more HTML and implemented what I learned into my startup
 
 ## TODO:
 Have reviews on recipe page update live
-Login stored on MongoDB
-Reviews stored on MongoDB
 Recipes stored on MongoDB
 Dashboard page
 Allow logged in users to save recipes to Dashboard

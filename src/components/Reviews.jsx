@@ -18,7 +18,7 @@ export function Reviews({ reviews, setAverageRating, username, recipeId }) {
         if (newReview.rating && newReview.text && newReview.author) {
             try {
                 const response = await fetch(`/api/recipes/${recipeId}/reviews`, {
-                // const response = await fetch(`https://startup.meltingpot.live/api/recipes/${recipeId}/reviews`, { (this might be broken)
+                // const response = await fetch(`https://startup.meltingpot.live/api/recipes/${recipeId}/reviews`, { (switch back to this if it breaks in production)
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
