@@ -22,7 +22,7 @@ Whether you're a culinary pro eager to share your recipes or a beginner looking 
  - Data Storage: Store recipe details, user profiles, and comments in a persistent database.
  - Web Sockets: Allow real-time updates on recipe comments or live chat for recipe discussions.
 
- ## HTML deliverable
+ ## HTML Deliverable
 
 For this assignment I built out the HTML structure and content of my website
 
@@ -33,7 +33,7 @@ For this assignment I built out the HTML structure and content of my website
 - **DB/Login** - Input box and submit button for login. The recipes and reviews represent data pulled from the database.
 - **WebSocket** - The comments and reviews represent realtime commenters and reviewers.
 
-## CSS deliverable
+## CSS Deliverable
 
 For this assignment I styled the website into its final appearance.
 
@@ -43,7 +43,7 @@ For this assignment I styled the website into its final appearance.
 - **Application text content** - Consistent fonts throughout the site
 - **Application images** - I have several images for different recipes
 
-## React deliverable
+## React Deliverable
 
 For this assignment I used JavaScript and React so the app works for a user. I also added placeholders for other features.
 
@@ -55,7 +55,7 @@ For this assignment I used JavaScript and React so the app works for a user. I a
 - [x] **Router** - Routing between pages and components.
 - [x] **Hooks** - Recipeprovider uses useState to provide recipes for the recipes page.
 
-## Service deliverable
+## Service Deliverable
 
 For this deliverable, I added backend endpoints that handle user authentication, recipe management, and review submissions. I also added calls to third party APIS such as foodish and a Kanye West quote API
 
@@ -66,3 +66,18 @@ For this deliverable, I added backend endpoints that handle user authentication,
 - [x] **Review Submissions** - Implemented endpoints to submit reviews for recipes and calculate the average rating based on user reviews.
 - [x] **Frontend calls service endpoints** - Integrated the frontend with the backend using the fetch function to make API calls.
 - [x] **Calls to third party endpoints** - Newly added recipes will be given a random image from `https://foodish-api.com/` and there is also a random kanye west quote on the home page from `https://api.kanye.rest/`.
+
+## Login Deliverable
+
+For this deliverable, I implemented user authentication using cookies instead of local storage. The backend uses JWT tokens stored in HTTP-only cookies to manage user sessions securely. The frontend checks the authentication status on page load and maintains the user's login state across page refreshes.
+
+- **User Registration**: Added an endpoint for user registration that hashes passwords and stores user data in MongoDB. A JWT token is generated and stored in an HTTP-only cookie upon successful registration.
+- **User Login**: Added an endpoint for user login that verifies user credentials, generates a JWT token, and stores it in an HTTP-only cookie. The frontend updates the UI based on the login state.
+- **User Logout**: Added an endpoint for user logout that clears the authentication cookie.
+- **Authentication Middleware**: Implemented middleware to verify JWT tokens from cookies for protected routes.
+- **Frontend Integration**: Updated the frontend to check the authentication status on page load and maintain the user's login state using cookies. The login and registration forms handle user authentication and update the UI accordingly.
+
+### Key Features
+- **Secure Authentication**: User sessions are managed using JWT tokens stored in HTTP-only cookies, enhancing security.
+- **Persistent Login State**: The frontend checks the authentication status on page load, ensuring the user remains logged in across page refreshes.
+- **Protected Routes**: Implemented middleware to protect routes that require authentication, ensuring only authenticated users can access certain features such as leaving reviews.
