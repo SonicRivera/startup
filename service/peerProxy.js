@@ -31,7 +31,6 @@ function peerProxy(httpServer) {
     // Remove the closed connection so we don't try to forward anymore
     ws.on('close', () => {
       const pos = connections.findIndex((o, i) => o.id === connection.id);
-
       if (pos >= 0) {
         connections.splice(pos, 1);
       }

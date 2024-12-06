@@ -136,8 +136,9 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
   }
 });
 
-peerProxy(httpService);
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+const httpService = app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
+
+peerProxy(httpService);
