@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const DB = require('./database.js');
 const config = require('./dbConfig.json');
+const WebSocket = require('ws')
+const server = new WebSocket.Server({port: '5000'})
 
 const JWT_SECRET = config.JWT_SECRET;
 
@@ -132,6 +134,18 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
   } else {
     res.status(404).send({ msg: 'Recipe not found' });
   }
+});
+
+
+server.on('connection', socket => {
+  socket.on('message', message => {
+    // Broadcast the message as-is to all connected clients
+    server.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message.toString());
+      }
+    });
+  });
 });
 
 app.listen(port, () => {
