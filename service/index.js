@@ -4,30 +4,56 @@ const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const http = require('http');
+const WebSocket = require('ws');
 const app = express();
 const DB = require('./database.js');
 const config = require('./dbConfig.json');
-const { peerProxy } = require('./peerProxy.js');
 
 
 const JWT_SECRET = config.JWT_SECRET;
 
 // CORS configuration
 const corsOptions = {
-  origin: 'http://localhost:5173/', // Switch to 'https://startup.meltingpot.live/' for production
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://startup.meltingpot.live'
+    : 'http://localhost:5173',
   optionsSuccessStatus: 200,
   credentials: true
-
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// Create WebSocket server attached to HTTP server
+const wss = new WebSocket.Server({ 
+  server,
+  path: '/ws'
+});
+
+// WebSocket connection handler
+wss.on('connection', socket => {
+  socket.on('message', async (message) => {
+    try {
+      const messageData = JSON.parse(message);
+      wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(messageData));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling message:', error);
+    }
+  });
+});
+
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.use(express.static('public'));
 
 // Middleware to verify JWT
@@ -136,9 +162,8 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
   }
 });
 
-
-const httpService = app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+// Update the listen call to use the HTTP server
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
+server.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
-
-peerProxy(httpService);

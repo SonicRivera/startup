@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Chatbox from '../components/Chatbox';
+import { Chatbox } from '../components/Chatbox';
 
-export function Home() {
+export function Home({ username }) {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
     const [quote, setQuote] = React.useState('Loading...');
     let beg;
@@ -98,8 +98,13 @@ export function Home() {
                         <p className='author'>- Kanye West</p>
                     </div>
                 </section>
+                <section>
+                    <div className="container my-5">
+                        <h3 className="text-center mb-4">Chat</h3>
+                        <Chatbox username={username} />
+                    </div>
+                </section>
             </div>
-            <Chatbox />
         </>
     );
 }
