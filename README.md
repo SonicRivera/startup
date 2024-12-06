@@ -81,3 +81,15 @@ For this deliverable, I implemented user authentication using cookies instead of
 - **Secure Authentication**: User sessions are managed using JWT tokens stored in HTTP-only cookies, enhancing security.
 - **Persistent Login State**: The frontend checks the authentication status on page load, ensuring the user remains logged in across page refreshes.
 - **Protected Routes**: Implemented middleware to protect routes that require authentication, ensuring only authenticated users can access certain features such as leaving reviews.
+
+## WebSocket Deliverable
+
+For this deliverable, I integrated WebSocket functionality to enable real-time features in the application.
+
+- **WebSocket Server**: Set up a WebSocket server to handle real-time connections.
+- **Live Chat**: Implemented a live chat feature where users can discuss recipes in real-time.
+- **Frontend Integration**: Updated the frontend to connect to the WebSocket server and handle real-time events.
+
+### Key Features
+- **Instant Messaging**: Users can chat with others in real-time.
+- **Reliable Connection**: The WebSocket connection automatically reconnects if disconnected.
