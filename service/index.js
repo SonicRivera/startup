@@ -10,6 +10,7 @@ const app = express();
 const DB = require('./database.js');
 const config = require('./dbConfig.json');
 
+
 const JWT_SECRET = config.JWT_SECRET;
 
 // CORS configuration
