@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Chatbox from '../components/Chatbox';
 
 export function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
@@ -98,6 +99,7 @@ export function Home() {
                     </div>
                 </section>
             </div>
+            <Chatbox />
         </>
     );
 }

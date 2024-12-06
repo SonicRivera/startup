@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const DB = require('./database.js');
 const config = require('./dbConfig.json');
+const { peerProxy } = require('./peerProxy.js');
+
 
 const JWT_SECRET = config.JWT_SECRET;
 
@@ -134,6 +136,9 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+
+const httpService = app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
+
+peerProxy(httpService);
