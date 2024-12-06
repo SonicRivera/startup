@@ -132,7 +132,27 @@ apiRouter.get('/recipes', async (req, res) => {
   res.json(recipes);
 });
 
-// Get a specific recipe by ID
+// Search Recipes
+apiRouter.get('/recipes/search', async (req, res) => {
+  const searchQuery = req.query.q?.toLowerCase();
+  if (!searchQuery) {
+    return res.json([]);
+  }
+
+  try {
+    const recipes = await DB.getRecipes();
+    const filteredRecipes = recipes.filter(recipe => 
+      recipe.recipeName.toLowerCase().includes(searchQuery) ||
+      recipe.ingredients.toLowerCase().includes(searchQuery) ||
+      recipe.category.toLowerCase().includes(searchQuery)
+    );
+    res.json(filteredRecipes);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to search recipes' });
+  }
+});
+
+// Get a specific recipe by ID 
 apiRouter.get('/recipes/:id', async (req, res) => {
   const recipe = await DB.getRecipeById(req.params.id);
   if (recipe) {

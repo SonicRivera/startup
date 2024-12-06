@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 export function Recipes() {
     const [recipes, setRecipes] = useState([]);
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get('search');
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch('/api/recipes');
+                const url = searchQuery 
+                    ? `/api/recipes/search?q=${encodeURIComponent(searchQuery)}`
+                    : '/api/recipes';
+                const response = await fetch(url);
                 const data = await response.json();
                 setRecipes(data);
             } catch (error) {
@@ -16,12 +21,14 @@ export function Recipes() {
         };
 
         fetchRecipes();
-    }, []);
+    }, [searchQuery]);
 
     return (
         <div>
             <section className="container my-5">
-                <h1 className="text-center">Browse Recipes</h1>
+                <h1 className="text-center">
+                    {searchQuery ? `Search Results for "${searchQuery}"` : 'Browse Recipes'}
+                </h1>
                 <div className="row">
                     {recipes.map((recipe, index) => (
                         <div key={index} className="col-md-4 mb-4">

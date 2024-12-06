@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Header({ username }) {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', {
@@ -10,6 +11,13 @@ export function Header({ username }) {
     });
     navigate('/');
     location.reload();
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/recipes?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
   };
 
   return (
@@ -22,14 +30,16 @@ export function Header({ username }) {
             </h1>
           </div>
           <div className="col-3">
-            <form className="d-flex">
+            <form className="d-flex" onSubmit={handleSearch}>
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search Recipes"
                 aria-label="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Link to="/" className="btn btn-outline-primary" type="submit">Search</Link>
+              <button className="btn btn-outline-primary" type="submit">Search</button>
             </form>
           </div>
           <div className="col-2">
