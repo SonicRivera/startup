@@ -14,9 +14,19 @@ const Chatbox = ({ username }) => {
             console.log('Connected to chat server');
         };
 
-        ws.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            setMessages(prev => [...prev, message]);
+        ws.onmessage = async (event) => {
+            try {
+                let messageData;
+                if (event.data instanceof Blob) {
+                    const text = await event.data.text();
+                    messageData = JSON.parse(text);
+                } else {
+                    messageData = JSON.parse(event.data);
+                }
+                setMessages(prev => [...prev, messageData]);
+            } catch (error) {
+                console.error('Error parsing message:', error);
+            }
         };
 
         ws.onerror = (error) => {

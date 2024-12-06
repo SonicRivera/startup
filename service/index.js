@@ -137,13 +137,18 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
 });
 
 server.on('connection', socket => {
-  socket.on('message', message => {
-    // Broadcast the message to all connected clients
-    server.clients.forEach(client => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message); // Pass through the complete message with username
-      }
-    });
+  socket.on('message', async (message) => {
+    try {
+      const messageData = JSON.parse(message);
+      // Broadcast the message to all connected clients
+      server.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(messageData));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling message:', error);
+    }
   });
 });
 
