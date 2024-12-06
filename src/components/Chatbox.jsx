@@ -40,6 +40,7 @@ const Chatbox = ({ username }) => {
             const message = {
                 type: 'message',
                 content: input.trim(),
+                username: username,
                 timestamp: new Date().toISOString()
             };
             
@@ -63,6 +64,7 @@ const Chatbox = ({ username }) => {
                             <small className="text-muted">
                                 {new Date(msg.timestamp).toLocaleTimeString()}
                             </small>
+                            <strong className="ms-2 text-primary">{msg.username}:</strong>
                             <span className="ms-2">{msg.content}</span>
                         </div>
                     ))}

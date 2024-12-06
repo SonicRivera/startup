@@ -136,13 +136,12 @@ apiRouter.post('/recipes/:id/reviews', authenticateToken, async (req, res) => {
   }
 });
 
-
 server.on('connection', socket => {
   socket.on('message', message => {
-    // Broadcast the message as-is to all connected clients
+    // Broadcast the message to all connected clients
     server.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(message.toString());
+        client.send(message); // Pass through the complete message with username
       }
     });
   });
