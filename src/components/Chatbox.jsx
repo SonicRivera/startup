@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const Chatbox = () => {
+const Chatbox = ({ username }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [socket, setSocket] = useState(null);
@@ -66,22 +67,28 @@ const Chatbox = () => {
                         </div>
                     ))}
                 </div>
-                <div className="input-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        placeholder="Type a message..."
-                    />
-                    <button 
-                        className="btn btn-primary" 
-                        onClick={handleSend}
-                    >
-                        Send
-                    </button>
-                </div>
+                {username ? (
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Type a message..."
+                        />
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={handleSend}
+                        >
+                            Send
+                        </button>
+                    </div>
+                ) : (
+                    <div className="text-center">
+                        <p className="mb-0">Please <Link to="/login">login</Link> to join the conversation.</p>
+                    </div>
+                )}
             </div>
         </div>
     );
