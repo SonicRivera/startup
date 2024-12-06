@@ -12,7 +12,6 @@ import { About } from './pages/About';
 import { Bad } from './pages/Bad';
 import { Recipes } from './pages/Recipes';
 import { SubmitRecipe } from './pages/SubmitRecipe';
-import { Chatbox } from './components/Chatbox'
 
 export default function App() {
   const [username, setUsername] = useState('');
@@ -54,7 +53,6 @@ export default function App() {
           <Route path='/bad' element={<Bad />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/submit-recipe" element={<SubmitRecipe />} />
-          <Route path="/chat" element={<Chatbox />} />
         </Routes>
 
         <Footer />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Chatbox } from '../components/Chatbox';
 
 export function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
@@ -95,6 +96,12 @@ export function Home() {
                         <h3>Kanye Quote:</h3>
                         <p className='quote'>"{quote}"</p>
                         <p className='author'>- Kanye West</p>
+                    </div>
+                </section>
+                <section>
+                    <div className="container my-5">
+                        <h3 className="text-center mb-4">Chat</h3>
+                        <Chatbox />
                     </div>
                 </section>
             </div>

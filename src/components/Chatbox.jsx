@@ -61,7 +61,7 @@ const Chatbox = () => {
                         <span className="timestamp">
                             {new Date(msg.timestamp).toLocaleTimeString()}
                         </span>
-                        <span className="content">{msg.content}</span>
+                        <span className="content"> {msg.content}</span>
                     </div>
                 ))}
             </div>
