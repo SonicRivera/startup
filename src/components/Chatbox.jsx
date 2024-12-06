@@ -18,8 +18,9 @@ export function Chatbox() {
 
     const sendMessage = () => {
         if (input.trim()) {
-            const message = { text: input, timestamp: new Date() };
+            const message = { text: input, timestamp: new Date().toLocaleTimeString() };
             ws.current.send(JSON.stringify(message));
+            setMessages((prevMessages) => [...prevMessages, message]);
             setInput('');
         }
     };
