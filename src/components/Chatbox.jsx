@@ -7,8 +7,12 @@ const Chatbox = ({ username }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        // Create WebSocket connection
-        const ws = new WebSocket('ws://localhost:5000');
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = process.env.NODE_ENV === 'production'
+            ? `${protocol}//${window.location.host}/ws`
+            : 'ws://localhost:4000/ws';
+
+        const ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {
             console.log('Connected to chat server');
