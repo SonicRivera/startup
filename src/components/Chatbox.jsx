@@ -54,26 +54,34 @@ const Chatbox = () => {
     };
 
     return (
-        <div className="chatbox-container">
-            <div className="messages-container">
-                {messages.map((msg, index) => (
-                    <div key={index} className="message">
-                        <span className="timestamp">
-                            {new Date(msg.timestamp).toLocaleTimeString()}
-                        </span>
-                        <span className="content"> {msg.content}</span>
-                    </div>
-                ))}
-            </div>
-            <div className="input-container">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Type a message..."
-                />
-                <button onClick={handleSend}>Send</button>
+        <div className="card shadow">
+            <div className="card-body">
+                <div className="messages-container bg-light p-3 mb-3" style={{ height: '300px', overflowY: 'auto' }}>
+                    {messages.map((msg, index) => (
+                        <div key={index} className="message mb-2">
+                            <small className="text-muted">
+                                {new Date(msg.timestamp).toLocaleTimeString()}
+                            </small>
+                            <span className="ms-2">{msg.content}</span>
+                        </div>
+                    ))}
+                </div>
+                <div className="input-group">
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder="Type a message..."
+                    />
+                    <button 
+                        className="btn btn-primary" 
+                        onClick={handleSend}
+                    >
+                        Send
+                    </button>
+                </div>
             </div>
         </div>
     );
